@@ -8,5 +8,6 @@ namespace ClientesAPI.Data {
         }
 
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
