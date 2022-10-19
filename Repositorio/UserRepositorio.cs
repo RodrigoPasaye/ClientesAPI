@@ -13,8 +13,15 @@ namespace ClientesAPI.Repositorio {
             _context = context;
         }
 
-        public Task<string> Login(string userName, string password) {
-            throw new System.NotImplementedException();
+        public async Task<string> Login(string userName, string password) {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(userName.ToLower()));
+            if (user == null) {
+                return "noUser";
+            } else if (!VerificarPasswordHash(password, user.PasswordHash, user.PasswordSalt)) {
+                return "wrongPassword";
+            } else {
+                return "ok";
+            }
         }
 
         public async Task<int> Register(User user, string password) {
@@ -46,6 +53,18 @@ namespace ClientesAPI.Repositorio {
             using(var hmac = new System.Security.Cryptography.HMACSHA512()) {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        public bool VerificarPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt) {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt)) {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++) {
+                    if (computedHash[i] != passwordHash[i]) {
+                        return false;
+                    }
+                }
+                return true;
             }
         }
     }
