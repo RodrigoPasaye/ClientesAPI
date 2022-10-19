@@ -49,7 +49,9 @@ namespace ClientesAPI.Controllers {
                 _responseDto.DisplayMessage = "Contraseña Incorrecta";
                 return BadRequest(_responseDto);
             }
-            return Ok("Usuario Correcto");
+            _responseDto.Result = respuesta;
+            _responseDto.DisplayMessage = "Usuario Correcto";
+            return Ok(_responseDto);
         }
     }
 }

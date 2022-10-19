@@ -140,3 +140,7 @@ D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
 D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Annotations.dll
 D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Scrutor.dll
+D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Filters.dll
+D:\CursoCSharp\ClientesAPI\bin\Debug\net5.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
