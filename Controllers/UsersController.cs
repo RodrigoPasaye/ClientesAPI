@@ -35,5 +35,21 @@ namespace ClientesAPI.Controllers {
             _responseDto.Result = respuesta;
             return Ok(_responseDto);
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(UserDto userDto) {
+            var respuesta = await _userRepositorio.Login(userDto.UserName, userDto.Password);
+            if (respuesta == "noUser") {
+                _responseDto.IsSuccess = false;
+                _responseDto.DisplayMessage = "Usuario No Existe";
+                return BadRequest(_responseDto);
+            }
+            if (respuesta == "wrongPassword") {
+                _responseDto.IsSuccess = false;
+                _responseDto.DisplayMessage = "Contraseña Incorrecta";
+                return BadRequest(_responseDto);
+            }
+            return Ok("Usuario Correcto");
+        }
     }
 }
