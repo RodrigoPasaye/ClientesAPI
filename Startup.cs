@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,20 @@ namespace ClientesAPI {
                     };
                 });
 
+            services.AddSwaggerGen(c => {
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
+
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme {
+                    Description = "Autorizacion Standar, Usar Bearer. Ejemplo \"beare {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+            });
+
+            services.AddCors();
+
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ClientesAPI", Version = "v1" });
@@ -70,6 +85,8 @@ namespace ClientesAPI {
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
